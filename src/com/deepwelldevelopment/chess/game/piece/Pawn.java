@@ -65,4 +65,18 @@ public class Pawn extends ChessPiece {
 
         return moves;
     }
+
+    @Override
+    public ArrayList<ChessMove> getAttackedSquares() {
+        ArrayList<ChessMove> moves = new ArrayList<>();
+
+        if (color == WHITE) {
+            moves.add(new ChessMove(this, x + 1, y - 1));
+            moves.add(new ChessMove(this, x - 1, y - 1));
+        } else {
+            moves.add(new ChessMove(this, x + 1, y + 1));
+            moves.add(new ChessMove(this, x - 1, y + 1));
+        }
+        return moves;
+    }
 }

@@ -41,6 +41,10 @@ public class ChessPiece {
         return null;
     }
 
+    public ArrayList<ChessMove> getAttackedSquares() {
+        return null;
+    }
+
     public int getColor() {
         return color;
     }

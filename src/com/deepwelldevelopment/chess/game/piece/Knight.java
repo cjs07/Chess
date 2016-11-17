@@ -99,4 +99,82 @@ public class Knight extends ChessPiece {
 
         return moves;
     }
+
+    @Override
+    public ArrayList<ChessMove> getAttackedSquares() {
+        ArrayList<ChessMove> moves = new ArrayList<>();
+
+        int targetX;
+        int targetY;
+        try {
+            targetX = x + 2;
+            targetY = y + 1;
+            moves.add(new ChessMove(this, targetX, targetY));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //this move would move off the board
+        }
+
+        try {
+            targetX = x + 1;
+            targetY = y + 2;
+            moves.add(new ChessMove(this, targetX, targetY));
+
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //this move would move off the board
+        }
+
+        try {
+            targetX = x - 1;
+            targetY = y + 2;
+            moves.add(new ChessMove(this, targetX, targetY));
+
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //this move would move off the board
+        }
+
+        try {
+            targetX = x - 2;
+            targetY = y + 1;
+            moves.add(new ChessMove(this, targetX, targetY));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //this move would move off the board
+        }
+
+        try {
+            targetX = x - 2;
+            targetY = y - 1;
+            moves.add(new ChessMove(this, targetX, targetY));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //this move would move off the board
+        }
+
+        try {
+            targetX = x - 1;
+            targetY = y - 2;
+            moves.add(new ChessMove(this, targetX, targetY));
+
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //this move would move off the board
+        }
+
+        try {
+            targetX = x + 1;
+            targetY = y - 2;
+            moves.add(new ChessMove(this, targetX, targetY));
+
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //this move would move off the board
+        }
+
+        try {
+            targetX = x + 2;
+            targetY = y - 1;
+            moves.add(new ChessMove(this, targetX, targetY));
+
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //this move would move off the board
+        }
+
+        return moves;
+    }
 }

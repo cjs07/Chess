@@ -2,6 +2,8 @@ package com.deepwelldevelopment.chess.game;
 
 import com.deepwelldevelopment.chess.game.piece.*;
 
+import java.util.ArrayList;
+
 public class ChessGame {
 
     public static ChessGame instance;
@@ -14,7 +16,7 @@ public class ChessGame {
 
         //black pieces
         for (int i = 0; i < 8; i++) {
-            board[i][1] = new Pawn(ChessPiece.BLACK, i, 1);
+            //board[i][1] = new Pawn(ChessPiece.BLACK, i, 1);
         }
         board[0][0] = new Rook(ChessPiece.BLACK, 0, 0);
         board[1][0] = new Knight(ChessPiece.BLACK, 1, 0);
@@ -27,7 +29,7 @@ public class ChessGame {
 
         //white pieces
         for (int i = 0; i < 8; i++) {
-            board[i][6] = new Pawn(ChessPiece.WHITE, i, 6);
+            //board[i][6] = new Pawn(ChessPiece.WHITE, i, 6);
         }
         board[0][7] = new Rook(ChessPiece.WHITE, 0, 7);
         board[1][7] = new Knight(ChessPiece.WHITE, 1, 7);
@@ -51,5 +53,27 @@ public class ChessGame {
 
     public void removePiece(int x, int y) {
         board[x][y] = null;
+    }
+
+    public boolean canKingMoveTo(int color, int x, int y) {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                ChessPiece piece = board[i][j];
+                if (piece != null) {
+                    if (piece.getType() != ChessPiece.KING) {
+                        ArrayList<ChessMove> moves = piece.getAttackedSquares();
+                        for (ChessMove move : moves) {
+                            if (move.getPiece().getColor() != color) { //opposing piece
+                                //check if piece is attacking target square for this move
+                                if (move.getTargetX() == x && move.getTargetY() == y) {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return true; //if this is reached, was not returned for any of opponents pieces
     }
 }
