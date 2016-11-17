@@ -1,5 +1,6 @@
 package com.deepwelldevelopment.chess.game.piece;
 
+import com.deepwelldevelopment.chess.game.ChessGame;
 import com.deepwelldevelopment.chess.game.ChessMove;
 
 import java.util.ArrayList;
@@ -30,8 +31,10 @@ public class ChessPiece {
     }
 
     public void move(int x, int y) {
+        ChessGame.instance.removePiece(this.x, this.y);
         this.x = x;
         this.y = y;
+        ChessGame.instance.putPiece(this, x, y);
     }
 
     public ArrayList<ChessMove> getValidMoves() {
@@ -60,5 +63,27 @@ public class ChessPiece {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof ChessPiece) {
+            ChessPiece piece = ((ChessPiece) obj);
+            if (piece.getColor() == color) {
+                if (piece.getType() == type) {
+                    if (piece.getX() == x) {
+                        return piece.getY() == y;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 }

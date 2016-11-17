@@ -56,19 +56,19 @@ public class ChessPanel extends JPanel implements Runnable, MouseListener {
         for (int  x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
                 if (color == 0) {
-                    g.setColor(Color.BLACK);
+                    g.setColor(Color.WHITE);
                     color = 1;
                 } else if (color == 1) {
-                    g.setColor(Color.WHITE);
+                    g.setColor(Color.BLACK);
                     color = 0;
                 }
                 g.fillRect(x*squareWidth, y*squareHeight, squareWidth, squareHeight);
             }
             if (color == 0) {
-                g.setColor(Color.BLACK);
+                g.setColor(Color.WHITE);
                 color = 1;
             } else if (color == 1) {
-                g.setColor(Color.WHITE);
+                g.setColor(Color.BLACK);
                 color = 0;
             }
         }
@@ -83,17 +83,22 @@ public class ChessPanel extends JPanel implements Runnable, MouseListener {
                 if (piece != null) {
                     switch (piece.getType()) { //identify piece type
                         case ChessPiece.PAWN:
+                            g.drawString("P", (x * squareWidth), (y * squareHeight) + 60);
                             break;
                         case ChessPiece.KNIGHT:
+                            g.drawString("N", (x * squareWidth), (y * squareHeight) + 60);
                             break;
                         case ChessPiece.BISHOP:
+                            g.drawString("B", (x * squareWidth), (y * squareHeight) + 60);
                             break;
                         case ChessPiece.ROOK:
                             g.drawString("R", (x*squareWidth), (y*squareHeight) + 60);
                             break;
                         case ChessPiece.QUEEN:
+                            g.drawString("Q", (x * squareWidth), (y * squareHeight) + 60);
                             break;
                         case ChessPiece.KING:
+                            g.drawString("K", (x * squareWidth), (y * squareHeight) + 60);
                             break;
                         default: //should never be seen
                             break;
@@ -141,15 +146,24 @@ public class ChessPanel extends JPanel implements Runnable, MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        //find grid location for mouse click
-        int x = e.getX()/squareWidth;
-        int y = e.getY()/squareHeight;
+        if (selectedX == -1 && selectedY == -1) {
+            //find grid location for mouse click
+            int x = e.getX() / squareWidth;
+            int y = e.getY() / squareHeight;
 
-        //if there is apiece in the selected square, select the square
-        if (ChessGame.instance.pieceAt(x, y) != null) {
-            selectedX = x;
-            selectedY = y;
-        } else { //otherwise deselect the selected square
+            //if there is apiece in the selected square, select the square
+            if (ChessGame.instance.pieceAt(x, y) != null) {
+                selectedX = x;
+                selectedY = y;
+            } else { //otherwise deselect the selected square
+                selectedX = -1;
+                selectedY = -1;
+            }
+        } else { //there is a piece already selected, attempt to move it
+            int x = e.getX() / squareWidth;
+            int y = e.getY() / squareHeight;
+            ChessMove move = new ChessMove(ChessGame.instance.pieceAt(selectedX, selectedY), x, y);
+            move.move();
             selectedX = -1;
             selectedY = -1;
         }
