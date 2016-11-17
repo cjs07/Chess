@@ -17,20 +17,86 @@ public class Knight extends ChessPiece {
 
         int targetX;
         int targetY;
-        if (y > 0) { //do moves the move 1 square up
-            targetY = y - 1;
-            if (x > 1) { //up one left 2
-                targetX = -2;
-                if (ChessGame.instance.pieceAt(targetX, targetY) == null) {
-                    moves.add(new ChessMove(this, targetX, targetY));
-                } else {
-                    if (ChessGame.instance.pieceAt(targetX, targetY).getColor() != color) {
-                        moves.add(new ChessMove(this, targetX, targetY));
-                    }
-                }
+        try {
+            targetX = x+2;
+            targetY = y+1;
+            if (ChessGame.instance.pieceAt(targetX, targetY) == null || ChessGame.instance.pieceAt(targetX, targetY).getColor() != color) {
+                moves.add(new ChessMove(this, targetX, targetY));
             }
-
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //this move would move off the board
         }
+
+        try {
+            targetX = x+1;
+            targetY = y+2;
+            if (ChessGame.instance.pieceAt(targetX, targetY) == null || ChessGame.instance.pieceAt(targetX, targetY).getColor() != color) {
+                moves.add(new ChessMove(this, targetX, targetY));
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //this move would move off the board
+        }
+
+        try {
+            targetX = x-1;
+            targetY = y+2;
+            if (ChessGame.instance.pieceAt(targetX, targetY) == null || ChessGame.instance.pieceAt(targetX, targetY).getColor() != color) {
+                moves.add(new ChessMove(this, targetX, targetY));
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //this move would move off the board
+        }
+
+        try {
+            targetX = x-2;
+            targetY = y+1;
+            if (ChessGame.instance.pieceAt(targetX, targetY) == null || ChessGame.instance.pieceAt(targetX, targetY).getColor() != color) {
+                moves.add(new ChessMove(this, targetX, targetY));
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //this move would move off the board
+        }
+
+        try {
+            targetX = x-2;
+            targetY = y-1;
+            if (ChessGame.instance.pieceAt(targetX, targetY) == null || ChessGame.instance.pieceAt(targetX, targetY).getColor() != color) {
+                moves.add(new ChessMove(this, targetX, targetY));
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //this move would move off the board
+        }
+
+        try {
+            targetX = x-1;
+            targetY = y-2;
+            if (ChessGame.instance.pieceAt(targetX, targetY) == null || ChessGame.instance.pieceAt(targetX, targetY).getColor() != color) {
+                moves.add(new ChessMove(this, targetX, targetY));
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //this move would move off the board
+        }
+
+        try {
+            targetX = x+1;
+            targetY = y-2;
+            if (ChessGame.instance.pieceAt(targetX, targetY) == null || ChessGame.instance.pieceAt(targetX, targetY).getColor() != color) {
+                moves.add(new ChessMove(this, targetX, targetY));
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //this move would move off the board
+        }
+
+        try {
+            targetX = x+2;
+            targetY = y-1;
+            if (ChessGame.instance.pieceAt(targetX, targetY) == null || ChessGame.instance.pieceAt(targetX, targetY).getColor() != color) {
+                moves.add(new ChessMove(this, targetX, targetY));
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //this move would move off the board
+        }
+
         return moves;
     }
 }

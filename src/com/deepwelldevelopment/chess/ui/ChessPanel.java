@@ -149,7 +149,7 @@ public class ChessPanel extends JPanel implements Runnable, MouseListener {
         if (selectedX == -1 && selectedY == -1) {
             //find grid location for mouse click
             int x = e.getX() / squareWidth;
-            int y = e.getY() / squareHeight;
+            int y = (e.getY()-30) / squareHeight;
 
             //if there is apiece in the selected square, select the square
             if (ChessGame.instance.pieceAt(x, y) != null) {
@@ -161,7 +161,7 @@ public class ChessPanel extends JPanel implements Runnable, MouseListener {
             }
         } else { //there is a piece already selected, attempt to move it
             int x = e.getX() / squareWidth;
-            int y = e.getY() / squareHeight;
+            int y = (e.getY()-30) / squareHeight;
             ChessMove move = new ChessMove(ChessGame.instance.pieceAt(selectedX, selectedY), x, y);
             move.move();
             selectedX = -1;
