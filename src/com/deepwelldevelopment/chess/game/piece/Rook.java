@@ -4,6 +4,7 @@ import com.deepwelldevelopment.chess.game.ChessGame;
 import com.deepwelldevelopment.chess.game.ChessMove;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Rook extends ChessPiece {
 
@@ -17,7 +18,7 @@ public class Rook extends ChessPiece {
 
         //check all squares that the piece could move to
         for (int x = this.x + 1; x < 8; x++) {
-            if (ChessGame.instance.pieceAt(x, y) == null || x == this.x) { //there is no piece at the square we are looking at
+            if (ChessGame.instance.pieceAt(x, y) == null) { //there is no piece at the square we are looking at
                 moves.add(new ChessMove(this, x, y));
             } else { //there is a piece at the target square. no more moves can be made past this square in this direction (except the knight)
                 if (ChessGame.instance.pieceAt(x, y).getColor() != color) { //piece in target square is opposing color and can be captured
@@ -30,7 +31,7 @@ public class Rook extends ChessPiece {
         }
 
         for (int x = this.x - 1; x >= 0; x--) {
-            if (ChessGame.instance.pieceAt(x, y) == null || x == this.x) { //there is no piece at the square we are looking at
+            if (ChessGame.instance.pieceAt(x, y) == null) { //there is no piece at the square we are looking at
                 moves.add(new ChessMove(this, x, y));
             } else { //there is a piece at the target square. no more moves can be made past this square in this direction (except the knight)
                 if (ChessGame.instance.pieceAt(x, y).getColor() != color) { //piece in target square is opposing color and can be captured
@@ -43,7 +44,7 @@ public class Rook extends ChessPiece {
         }
 
         for (int y = this.y + 1; y < 8; y++) {
-            if (ChessGame.instance.pieceAt(x, y) == null || y == this.y) { //there is no piece at the square we are looking at
+            if (ChessGame.instance.pieceAt(x, y) == null) { //there is no piece at the square we are looking at
                 moves.add(new ChessMove(this,x, y));
             } else { //there is a piece at the target square. no more moves can be made past this square in this direction (except the knight)
                 if (ChessGame.instance.pieceAt(x, y).getColor() != color) { //piece in target square is opposing color and can be captured
@@ -56,7 +57,7 @@ public class Rook extends ChessPiece {
         }
 
         for (int y = this.y - 1; y >= 0; y--) {
-            if (ChessGame.instance.pieceAt(x, y) == null || y == this.y) { //there is no piece at the square we are looking at
+            if (ChessGame.instance.pieceAt(x, y) == null) { //there is no piece at the square we are looking at
                 moves.add(new ChessMove(this, x, y));
             } else { //there is a piece at the target square. no more moves can be made past this square in this direction (except the knight)
                 if (ChessGame.instance.pieceAt(x, y).getColor() != color) { //piece in target square is opposing color and can be captured
@@ -67,6 +68,16 @@ public class Rook extends ChessPiece {
                 }
             }
         }
+
+        //remove moves that would cause a check, or do not save a king from check
+        Iterator<ChessMove> iterator = moves.iterator();
+        while (iterator.hasNext()) {
+            ChessMove move = iterator.next();
+            if (!ChessGame.instance.isNewBoardLegal(ChessGame.instance.pseudoMove(move))) {
+                iterator.remove();
+            }
+        }
+
         return moves;
     }
 
@@ -76,7 +87,7 @@ public class Rook extends ChessPiece {
 
         //check all squares that the piece could move to
         for (int x = this.x + 1; x < 8; x++) {
-            if (ChessGame.instance.pieceAt(x, y) == null || x == this.x) { //there is no piece at the square we are looking at
+            if (ChessGame.instance.pieceAt(x, y) == null) { //there is no piece at the square we are looking at
                 moves.add(new ChessMove(this, x, y));
             } else { //there is a piece at the target square. no more moves can be made past this square in this direction (except the knight)
                 moves.add(new ChessMove(this, x, y));
@@ -85,7 +96,7 @@ public class Rook extends ChessPiece {
         }
 
         for (int x = this.x - 1; x >= 0; x--) {
-            if (ChessGame.instance.pieceAt(x, y) == null || x == this.x) { //there is no piece at the square we are looking at
+            if (ChessGame.instance.pieceAt(x, y) == null) { //there is no piece at the square we are looking at
                 moves.add(new ChessMove(this, x, y));
             } else { //there is a piece at the target square. no more moves can be made past this square in this direction (except the knight)
                 moves.add(new ChessMove(this, x, y));
@@ -94,7 +105,7 @@ public class Rook extends ChessPiece {
         }
 
         for (int y = this.y + 1; y < 8; y++) {
-            if (ChessGame.instance.pieceAt(x, y) == null || y == this.y) { //there is no piece at the square we are looking at
+            if (ChessGame.instance.pieceAt(x, y) == null) { //there is no piece at the square we are looking at
                 moves.add(new ChessMove(this, x, y));
             } else { //there is a piece at the target square. no more moves can be made past this square in this direction (except the knight)
                 moves.add(new ChessMove(this, x, y));
@@ -103,7 +114,7 @@ public class Rook extends ChessPiece {
         }
 
         for (int y = this.y - 1; y >= 0; y--) {
-            if (ChessGame.instance.pieceAt(x, y) == null || y == this.y) { //there is no piece at the square we are looking at
+            if (ChessGame.instance.pieceAt(x, y) == null) { //there is no piece at the square we are looking at
                 moves.add(new ChessMove(this, x, y));
             } else { //there is a piece at the target square. no more moves can be made past this square in this direction (except the knight)
                 moves.add(new ChessMove(this, x, y));

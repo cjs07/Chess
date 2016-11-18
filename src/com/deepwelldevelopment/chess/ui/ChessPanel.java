@@ -116,7 +116,8 @@ public class ChessPanel extends JPanel implements Runnable, MouseListener {
             g.fillRect(x, y, squareWidth, squareHeight);
 
             //fill in squares for legal moves of selected piece
-            ArrayList<ChessMove> moves = ChessGame.instance.pieceAt(selectedX, selectedY).getValidMoves();
+            ChessPiece piece = ChessGame.instance.pieceAt(selectedX, selectedY);
+            ArrayList<ChessMove> moves = piece.getValidMoves();
             for (ChessMove move : moves) {
                 int moveX = move.getTargetX();
                 int moveY = move.getTargetY();
@@ -155,17 +156,35 @@ public class ChessPanel extends JPanel implements Runnable, MouseListener {
             if (ChessGame.instance.pieceAt(x, y) != null) {
                 selectedX = x;
                 selectedY = y;
+                return;
             } else { //otherwise deselect the selected square
                 selectedX = -1;
                 selectedY = -1;
+                return;
             }
         } else { //there is a piece already selected, attempt to move it
             int x = e.getX() / squareWidth;
             int y = (e.getY()-30) / squareHeight;
             ChessMove move = new ChessMove(ChessGame.instance.pieceAt(selectedX, selectedY), x, y);
-            move.move();
-            selectedX = -1;
-            selectedY = -1;
+            if (ChessGame.instance.isNewBoardLegal(ChessGame.instance.pseudoMove(move))) {
+                move.move();
+                ChessGame.instance.parseBoardState();
+                selectedX = -1;
+                selectedY = -1;
+                return;
+            }
+        }
+
+        int x = e.getX() / squareWidth;
+        int y = (e.getY() - 30) / squareHeight;
+        if (ChessGame.instance.pieceAt(x, y) != null) {
+            if (ChessGame.instance.pieceAt(x, y).getColor() == ChessGame.instance.getTurn()) {
+                selectedX = x;
+                selectedY = y;
+            } else {
+                selectedX = -1;
+                selectedY = -1;
+            }
         }
     }
 

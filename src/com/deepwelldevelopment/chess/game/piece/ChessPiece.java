@@ -5,7 +5,7 @@ import com.deepwelldevelopment.chess.game.ChessMove;
 
 import java.util.ArrayList;
 
-public class ChessPiece {
+public class ChessPiece implements Cloneable {
 
     public static final int PAWN = 0;
     public static final int KNIGHT = 1;
@@ -89,5 +89,10 @@ public class ChessPiece {
         } else {
             return false;
         }
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return new ChessPiece(color, type, x, y);
     }
 }

@@ -4,6 +4,7 @@ import com.deepwelldevelopment.chess.game.ChessGame;
 import com.deepwelldevelopment.chess.game.ChessMove;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Knight extends ChessPiece {
 
@@ -97,6 +98,15 @@ public class Knight extends ChessPiece {
             //this move would move off the board
         }
 
+        //remove moves that would cause a check, or do not save a king from check
+        Iterator<ChessMove> iterator = moves.iterator();
+        while (iterator.hasNext()) {
+            ChessMove move = iterator.next();
+            if (!ChessGame.instance.isNewBoardLegal(ChessGame.instance.pseudoMove(move))) {
+                iterator.remove();
+            }
+        }
+
         return moves;
     }
 
@@ -174,7 +184,6 @@ public class Knight extends ChessPiece {
         } catch (ArrayIndexOutOfBoundsException e) {
             //this move would move off the board
         }
-
         return moves;
     }
 }

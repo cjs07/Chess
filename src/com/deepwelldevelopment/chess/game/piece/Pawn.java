@@ -4,6 +4,7 @@ import com.deepwelldevelopment.chess.game.ChessGame;
 import com.deepwelldevelopment.chess.game.ChessMove;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Pawn extends ChessPiece {
 
@@ -62,6 +63,15 @@ public class Pawn extends ChessPiece {
         }
 
         //TODO: EN PASSANT
+
+        //remove moves that would cause a check, or do not save a king from check
+        Iterator<ChessMove> iterator = moves.iterator();
+        while (iterator.hasNext()) {
+            ChessMove move = iterator.next();
+            if (!ChessGame.instance.isNewBoardLegal(ChessGame.instance.pseudoMove(move))) {
+                iterator.remove();
+            }
+        }
 
         return moves;
     }
