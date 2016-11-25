@@ -98,7 +98,7 @@ public class Bishop extends ChessPiece {
         Iterator<ChessMove> iterator = moves.iterator();
         while (iterator.hasNext()) {
             ChessMove move = iterator.next();
-            if (!ChessGame.instance.isNewBoardLegal(ChessGame.instance.pseudoMove(move))) {
+            if (!ChessGame.instance.isNewBoardLegal(ChessGame.instance.pseudoMove(move), ChessGame.instance.getTurn())) {
                 iterator.remove();
             }
         }
@@ -162,6 +162,74 @@ public class Bishop extends ChessPiece {
                 targetX = x + i;
                 targetY = y - i;
                 if (ChessGame.instance.pieceAt(targetX, targetY) == null) {
+                    moves.add(new ChessMove(this, targetX, targetY));
+                } else {
+                    moves.add(new ChessMove(this, targetX, targetY));
+                    break;
+                }
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //off the board
+        }
+        return moves;
+    }
+
+    @Override
+    public ArrayList<ChessMove> getAttackedSquares(ChessPiece[][] board) {
+        ArrayList<ChessMove> moves = new ArrayList<>();
+
+        int targetX;
+        int targetY;
+        try {
+            for (int i = 1; i < 8; i++) {
+                targetX = x + i;
+                targetY = y + i;
+                if (board[targetX][targetY] == null) {
+                    moves.add(new ChessMove(this, targetX, targetY));
+                } else { //there is a piece at the target square
+                    moves.add(new ChessMove(this, targetX, targetY));
+                    break;
+                }
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //off the board
+        }
+
+        try {
+            for (int i = 1; i < 8; i++) {
+                targetX = x - i;
+                targetY = y + i;
+                if (board[targetX][targetY] == null) {
+                    moves.add(new ChessMove(this, targetX, targetY));
+                } else {
+                    moves.add(new ChessMove(this, targetX, targetY));
+                    break;
+                }
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //off the board
+        }
+
+        try {
+            for (int i = 1; i < 8; i++) {
+                targetX = x - i;
+                targetY = y - i;
+                if (board[targetX][targetY] == null) {
+                    moves.add(new ChessMove(this, targetX, targetY));
+                } else {
+                    moves.add(new ChessMove(this, targetX, targetY));
+                    break;
+                }
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //off the board
+        }
+
+        try {
+            for (int i = 1; i < 8; i++) {
+                targetX = x + i;
+                targetY = y - i;
+                if (board[targetX][targetY] == null) {
                     moves.add(new ChessMove(this, targetX, targetY));
                 } else {
                     moves.add(new ChessMove(this, targetX, targetY));

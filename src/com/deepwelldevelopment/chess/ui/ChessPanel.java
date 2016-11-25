@@ -166,7 +166,7 @@ public class ChessPanel extends JPanel implements Runnable, MouseListener {
             int x = e.getX() / squareWidth;
             int y = (e.getY()-30) / squareHeight;
             ChessMove move = new ChessMove(ChessGame.instance.pieceAt(selectedX, selectedY), x, y);
-            if (ChessGame.instance.isNewBoardLegal(ChessGame.instance.pseudoMove(move))) {
+            if (ChessGame.instance.isNewBoardLegal(ChessGame.instance.pseudoMove(move), ChessGame.instance.getTurn())) {
                 move.move();
                 ChessGame.instance.parseBoardState();
                 selectedX = -1;

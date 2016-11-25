@@ -68,7 +68,7 @@ public class Pawn extends ChessPiece {
         Iterator<ChessMove> iterator = moves.iterator();
         while (iterator.hasNext()) {
             ChessMove move = iterator.next();
-            if (!ChessGame.instance.isNewBoardLegal(ChessGame.instance.pseudoMove(move))) {
+            if (!ChessGame.instance.isNewBoardLegal(ChessGame.instance.pseudoMove(move), ChessGame.instance.getTurn())) {
                 iterator.remove();
             }
         }
@@ -78,6 +78,20 @@ public class Pawn extends ChessPiece {
 
     @Override
     public ArrayList<ChessMove> getAttackedSquares() {
+        ArrayList<ChessMove> moves = new ArrayList<>();
+
+        if (color == WHITE) {
+            moves.add(new ChessMove(this, x + 1, y - 1));
+            moves.add(new ChessMove(this, x - 1, y - 1));
+        } else {
+            moves.add(new ChessMove(this, x + 1, y + 1));
+            moves.add(new ChessMove(this, x - 1, y + 1));
+        }
+        return moves;
+    }
+
+    @Override
+    public ArrayList<ChessMove> getAttackedSquares(ChessPiece[][] board) {
         ArrayList<ChessMove> moves = new ArrayList<>();
 
         if (color == WHITE) {

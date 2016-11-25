@@ -26,6 +26,15 @@ public class ChessMove {
         }
     }
 
+    public boolean isLegal() {
+        ChessPiece[][] test = ChessGame.instance.pseudoMove(this);
+        if (ChessGame.instance.isNewBoardLegal(test,ChessGame.instance.getTurn())) {
+            return true;
+        } else{
+            return false;
+        }
+    }
+
     public ChessPiece getPiece() {
         return piece;
     }
@@ -36,10 +45,6 @@ public class ChessMove {
 
     public int getTargetY() {
         return targetY;
-    }
-
-    public boolean isLeagl() {
-        return isLeagl;
     }
 
     @Override

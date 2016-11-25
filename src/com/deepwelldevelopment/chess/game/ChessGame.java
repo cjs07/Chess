@@ -45,6 +45,7 @@ public class ChessGame {
         board[6][7] = new Knight(ChessPiece.WHITE, 6, 7);
         board[7][7] = new Rook(ChessPiece.WHITE, 7, 7);
 
+        turn = ChessPiece.WHITE;
         whiteCheck = false;
         blackCheck = false;
 
@@ -108,6 +109,31 @@ public class ChessGame {
         return false;
     }
 
+    public boolean isSquareAttacked(ChessPiece[][] board, int color, int x, int y) {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                ChessPiece piece = board[i][j];
+                if (piece != null) {
+                    if (piece.getType() != ChessPiece.KING) {
+                        ArrayList<ChessMove> moves = piece.getAttackedSquares(board);
+                        if (moves == null) {
+                            System.out.println("no moves");
+                        }
+                        for (ChessMove move : moves) {
+                            if (move.getPiece().getColor() != color) { //opposing piece
+                                //check if piece is attacking target square for this move
+                                if (move.getTargetX() == x && move.getTargetY() == y) {
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     //essentially an update loop
     public void parseBoardState() {
         for (int x = 0; x < board.length; x++) {
@@ -137,14 +163,14 @@ public class ChessGame {
         }
     }
 
-    public boolean isNewBoardLegal(ChessPiece[][] board) {
+    public boolean isNewBoardLegal(ChessPiece[][] board, int turn) {
         //find the kings
         for (int x = 0; x < board.length; x++) {
             for (int y = 0; y < board[0].length; y++) {
                 ChessPiece piece = board[x][y];
                 if (piece != null) {
                     if (piece.getType() == ChessPiece.KING) {
-                        if (isSquareAttacked(piece.getColor(), piece.getX(), piece.getY())) {
+                        if (isSquareAttacked(board, piece.getColor(), piece.getX(), piece.getY())) {
                             if (piece.getColor() == ChessPiece.WHITE) {
                                 if (turn == ChessPiece.WHITE) {
                                     return false;
@@ -184,7 +210,13 @@ public class ChessGame {
         ChessPiece[][] pseudo = new ChessPiece[8][8];
         for (int x = 0; x < pseudo.length; x++) {
             for (int y = 0; y < pseudo[0].length; y++) {
-                pseudo[x][y] = board[x][y];
+                try {
+                    if (board[x][y] != null) {
+                        pseudo[x][y] = (ChessPiece) board[x][y].clone();
+                    }
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
             }
         }
         ChessPiece piece = move.getPiece();

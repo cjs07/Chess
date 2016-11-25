@@ -45,6 +45,10 @@ public class ChessPiece implements Cloneable {
         return null;
     }
 
+    public ArrayList<ChessMove> getAttackedSquares(ChessPiece[][] board) {
+        return null;
+    }
+
     public int getColor() {
         return color;
     }
@@ -92,7 +96,7 @@ public class ChessPiece implements Cloneable {
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return new ChessPiece(color, type, x, y);
     }
 }

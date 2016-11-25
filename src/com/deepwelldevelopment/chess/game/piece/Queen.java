@@ -20,11 +20,11 @@ public class Queen extends ChessPiece {
             if (ChessGame.instance.pieceAt(x, y) == null || x == this.x) { //there is no piece at the square we are looking at
                 moves.add(new ChessMove(this, x, y));
             } else { //there is a piece at the target square. no more moves can be made past this square in this direction (except the knight)
-                if (ChessGame.instance.pieceAt(x, y).getColor() != color) { //piece in target square is opposing color and can be captured
+                if (ChessGame.instance.pieceAt(x, y).getColor() != color) {
                     moves.add(new ChessMove(this, x, y));
                     break;//leave loop for this direction
                 } else {
-                    break; //leave the loop for this direction
+                    break; //we are attempting to capture our own piece
                 }
             }
         }
@@ -33,11 +33,11 @@ public class Queen extends ChessPiece {
             if (ChessGame.instance.pieceAt(x, y) == null || x == this.x) { //there is no piece at the square we are looking at
                 moves.add(new ChessMove(this, x, y));
             } else { //there is a piece at the target square. no more moves can be made past this square in this direction (except the knight)
-                if (ChessGame.instance.pieceAt(x, y).getColor() != color) { //piece in target square is opposing color and can be captured
+                if (ChessGame.instance.pieceAt(x, y).getColor() != color) {
                     moves.add(new ChessMove(this, x, y));
                     break;//leave loop for this direction
                 } else {
-                    break; //leave the loop for this direction
+                    break; //we are attempting to capture our own piece
                 }
             }
         }
@@ -46,11 +46,11 @@ public class Queen extends ChessPiece {
             if (ChessGame.instance.pieceAt(x, y) == null || y == this.y) { //there is no piece at the square we are looking at
                 moves.add(new ChessMove(this, x, y));
             } else { //there is a piece at the target square. no more moves can be made past this square in this direction (except the knight)
-                if (ChessGame.instance.pieceAt(x, y).getColor() != color) { //piece in target square is opposing color and can be captured
+                if (ChessGame.instance.pieceAt(x, y).getColor() != color) {
                     moves.add(new ChessMove(this, x, y));
                     break;//leave loop for this direction
                 } else {
-                    break; //leave the loop for this direction
+                    break; //we are attempting to capture our own piece
                 }
             }
         }
@@ -59,11 +59,11 @@ public class Queen extends ChessPiece {
             if (ChessGame.instance.pieceAt(x, y) == null || y == this.y) { //there is no piece at the square we are looking at
                 moves.add(new ChessMove(this, x, y));
             } else { //there is a piece at the target square. no more moves can be made past this square in this direction (except the knight)
-                if (ChessGame.instance.pieceAt(x, y).getColor() != color) { //piece in target square is opposing color and can be captured
+                if (ChessGame.instance.pieceAt(x, y).getColor() != color) {
                     moves.add(new ChessMove(this, x, y));
                     break;//leave loop for this direction
                 } else {
-                    break; //leave the loop for this direction
+                    break; //we are attempting to capture our own piece
                 }
             }
         }
@@ -77,11 +77,11 @@ public class Queen extends ChessPiece {
                 if (ChessGame.instance.pieceAt(targetX, targetY) == null) {
                     moves.add(new ChessMove(this, targetX, targetY));
                 } else { //there is a piece at the target square
-                    if (ChessGame.instance.pieceAt(targetX, targetY).getColor() != color) {
-                        moves.add(new ChessMove(this, targetX, targetY));
-                        break;
+                    if (ChessGame.instance.pieceAt(x, y).getColor() != color) {
+                        moves.add(new ChessMove(this, x, y));
+                        break;//leave loop for this direction
                     } else {
-                        break;
+                        break; //we are attempting to capture our own piece
                     }
                 }
             }
@@ -96,11 +96,11 @@ public class Queen extends ChessPiece {
                 if (ChessGame.instance.pieceAt(targetX, targetY) == null) {
                     moves.add(new ChessMove(this, targetX, targetY));
                 } else {
-                    if (ChessGame.instance.pieceAt(targetX, targetY).getColor() != color) {
-                        moves.add(new ChessMove(this, targetX, targetY));
-                        break;
+                    if (ChessGame.instance.pieceAt(x, y).getColor() != color) {
+                        moves.add(new ChessMove(this, x, y));
+                        break;//leave loop for this direction
                     } else {
-                        break;
+                        break; //we are attempting to capture our own piece
                     }
                 }
             }
@@ -115,11 +115,11 @@ public class Queen extends ChessPiece {
                 if (ChessGame.instance.pieceAt(targetX, targetY) == null) {
                     moves.add(new ChessMove(this, targetX, targetY));
                 } else {
-                    if (ChessGame.instance.pieceAt(targetX, targetY).getColor() != color) {
-                        moves.add(new ChessMove(this, targetX, targetY));
-                        break;
+                    if (ChessGame.instance.pieceAt(x, y).getColor() != color) {
+                        moves.add(new ChessMove(this, x, y));
+                        break;//leave loop for this direction
                     } else {
-                        break;
+                        break; //we are attempting to capture our own piece
                     }
                 }
             }
@@ -134,11 +134,11 @@ public class Queen extends ChessPiece {
                 if (ChessGame.instance.pieceAt(targetX, targetY) == null) {
                     moves.add(new ChessMove(this, targetX, targetY));
                 } else {
-                    if (ChessGame.instance.pieceAt(targetX, targetY).getColor() != color) {
-                        moves.add(new ChessMove(this, targetX, targetY));
-                        break;
+                    if (ChessGame.instance.pieceAt(x, y).getColor() != color) {
+                        moves.add(new ChessMove(this, x, y));
+                        break;//leave loop for this direction
                     } else {
-                        break;
+                        break; //we are attempting to capture our own piece
                     }
                 }
             }
@@ -150,11 +150,10 @@ public class Queen extends ChessPiece {
         Iterator<ChessMove> iterator = moves.iterator();
         while (iterator.hasNext()) {
             ChessMove move = iterator.next();
-            if (!ChessGame.instance.isNewBoardLegal(ChessGame.instance.pseudoMove(move))) {
+            if (!move.isLegal()) {
                 iterator.remove();
             }
         }
-
         return moves;
     }
 
@@ -162,8 +161,8 @@ public class Queen extends ChessPiece {
     public ArrayList<ChessMove> getAttackedSquares() {
         ArrayList<ChessMove> moves = new ArrayList<>();
 
-        for (int x = this.x + 1; x < 8; x++) {
-            if (ChessGame.instance.pieceAt(x, y) == null) { //there is no piece at the square we are looking at
+        for (int x = this.x; x < 8; x++) {
+            if (ChessGame.instance.pieceAt(x, y) == null || x == this.x) { //there is no piece at the square we are looking at
                 moves.add(new ChessMove(this, x, y));
             } else { //there is a piece at the target square. no more moves can be made past this square in this direction (except the knight)
                 moves.add(new ChessMove(this, x, y));
@@ -171,8 +170,8 @@ public class Queen extends ChessPiece {
             }
         }
 
-        for (int x = this.x - 1; x >= 0; x--) {
-            if (ChessGame.instance.pieceAt(x, y) == null) { //there is no piece at the square we are looking at
+        for (int x = this.x; x >= 0; x--) {
+            if (ChessGame.instance.pieceAt(x, y) == null || x == this.x) { //there is no piece at the square we are looking at
                 moves.add(new ChessMove(this, x, y));
             } else { //there is a piece at the target square. no more moves can be made past this square in this direction (except the knight)
                 moves.add(new ChessMove(this, x, y));
@@ -180,8 +179,8 @@ public class Queen extends ChessPiece {
             }
         }
 
-        for (int y = this.y + 1; y < 8; y++) {
-            if (ChessGame.instance.pieceAt(x, y) == null) { //there is no piece at the square we are looking at
+        for (int y = this.y; y < 8; y++) {
+            if (ChessGame.instance.pieceAt(x, y) == null || y == this.y) { //there is no piece at the square we are looking at
                 moves.add(new ChessMove(this, x, y));
             } else { //there is a piece at the target square. no more moves can be made past this square in this direction (except the knight)
                 moves.add(new ChessMove(this, x, y));
@@ -189,8 +188,8 @@ public class Queen extends ChessPiece {
             }
         }
 
-        for (int y = this.y - 1; y >= 0; y--) {
-            if (ChessGame.instance.pieceAt(x, y) == null) { //there is no piece at the square we are looking at
+        for (int y = this.y; y >= 0; y--) {
+            if (ChessGame.instance.pieceAt(x, y) == null || y == this.y) { //there is no piece at the square we are looking at
                 moves.add(new ChessMove(this, x, y));
             } else { //there is a piece at the target square. no more moves can be made past this square in this direction (except the knight)
                 moves.add(new ChessMove(this, x, y));
@@ -223,6 +222,7 @@ public class Queen extends ChessPiece {
                     moves.add(new ChessMove(this, targetX, targetY));
                 } else {
                     moves.add(new ChessMove(this, targetX, targetY));
+                    break;
                 }
             }
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -252,6 +252,111 @@ public class Queen extends ChessPiece {
                     moves.add(new ChessMove(this, targetX, targetY));
                 } else {
                     moves.add(new ChessMove(this, targetX, targetY));
+                    break;
+                }
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //off the board
+        }
+        return moves;
+    }
+
+    @Override
+    public ArrayList<ChessMove> getAttackedSquares(ChessPiece[][] board) {
+        ArrayList<ChessMove> moves = new ArrayList<>();
+
+        for (int x = this.x; x < 8; x++) {
+            if (board[x][y] == null || x == this.x) { //there is no piece at the square we are looking at
+                moves.add(new ChessMove(this, x, y));
+            } else { //there is a piece at the target square. no more moves can be made past this square in this direction (except the knight)
+                moves.add(new ChessMove(this, x, y));
+                break;//leave loop for this direction
+            }
+        }
+
+        for (int x = this.x; x >= 0; x--) {
+            if (board[x][y] == null || x == this.x) { //there is no piece at the square we are looking at
+                moves.add(new ChessMove(this, x, y));
+            } else { //there is a piece at the target square. no more moves can be made past this square in this direction (except the knight)
+                moves.add(new ChessMove(this, x, y));
+                break;//leave loop for this direction
+            }
+        }
+
+        for (int y = this.y; y < 8; y++) {
+            if (board[x][y] == null || y == this.y) { //there is no piece at the square we are looking at
+                moves.add(new ChessMove(this, x, y));
+            } else { //there is a piece at the target square. no more moves can be made past this square in this direction (except the knight)
+                moves.add(new ChessMove(this, x, y));
+                break;//leave loop for this direction
+            }
+        }
+
+        for (int y = this.y; y >= 0; y--) {
+            if (board[x][y] == null || y == this.y) { //there is no piece at the square we are looking at
+                moves.add(new ChessMove(this, x, y));
+            } else { //there is a piece at the target square. no more moves can be made past this square in this direction (except the knight)
+                moves.add(new ChessMove(this, x, y));
+                break;//leave loop for this direction
+            }
+        }
+
+        int targetX;
+        int targetY;
+        try {
+            for (int i = 1; i < 8; i++) {
+                targetX = x + i;
+                targetY = y + i;
+                if (ChessGame.instance.pieceAt(targetX, targetY) == null) {
+                    moves.add(new ChessMove(this, targetX, targetY));
+                } else { //there is a piece at the target square
+                    moves.add(new ChessMove(this, targetX, targetY));
+                    break;
+                }
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //off the board
+        }
+
+        try {
+            for (int i = 1; i < 8; i++) {
+                targetX = x - i;
+                targetY = y + i;
+                if (ChessGame.instance.pieceAt(targetX, targetY) == null) {
+                    moves.add(new ChessMove(this, targetX, targetY));
+                } else {
+                    moves.add(new ChessMove(this, targetX, targetY));
+                    break;
+                }
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //off the board
+        }
+
+        try {
+            for (int i = 1; i < 8; i++) {
+                targetX = x - i;
+                targetY = y - i;
+                if (ChessGame.instance.pieceAt(targetX, targetY) == null) {
+                    moves.add(new ChessMove(this, targetX, targetY));
+                } else {
+                    moves.add(new ChessMove(this, targetX, targetY));
+                    break;
+                }
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //off the board
+        }
+
+        try {
+            for (int i = 1; i < 8; i++) {
+                targetX = x + i;
+                targetY = y - i;
+                if (ChessGame.instance.pieceAt(targetX, targetY) == null) {
+                    moves.add(new ChessMove(this, targetX, targetY));
+                } else {
+                    moves.add(new ChessMove(this, targetX, targetY));
+                    break;
                 }
             }
         } catch (ArrayIndexOutOfBoundsException e) {
